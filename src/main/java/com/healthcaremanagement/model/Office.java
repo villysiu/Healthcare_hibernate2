@@ -10,8 +10,8 @@ import java.util.Objects;
 @Entity
 @Table(name= "Office")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+
+
 public class Office {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,15 +25,20 @@ public class Office {
     @JoinColumn(name="doctor_id")
     private Doctor doctor;
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Office office = (Office) o;
-//        return officeId == office.officeId;
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hashCode(officeId);
-//    }
+    public Office(){}
+    public Office(String location, String phone, Doctor doctor) {
+        this.location = location;
+        this.phone = phone;
+        this.doctor = doctor;
+    }
+
+    @Override
+    public String toString() {
+        return "Office{" +
+                "officeId=" + officeId +
+                ", location='" + location + '\'' +
+                ", phone='" + phone + '\'' +
+                ", doctorId=" + doctor.getDoctorId() +
+                '}';
+    }
 }

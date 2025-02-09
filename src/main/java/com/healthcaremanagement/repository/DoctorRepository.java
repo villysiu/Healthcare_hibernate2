@@ -55,6 +55,7 @@ public class DoctorRepository {
     }
 
 
+
     public void addPatientToDoctor(int doctorId, Patient patient) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();

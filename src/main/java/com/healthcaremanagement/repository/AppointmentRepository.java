@@ -33,6 +33,8 @@ public class AppointmentRepository {
         }
     }
 
+
+
     public void updateAppointment(Appointment appointment) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -54,6 +56,7 @@ public class AppointmentRepository {
             transaction.commit();
         }
     }
+
 
 
 

@@ -32,7 +32,7 @@ public class Patient {
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Appointment> appointments = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "patients",cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "patients", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<Doctor> doctors;
 
     @Override

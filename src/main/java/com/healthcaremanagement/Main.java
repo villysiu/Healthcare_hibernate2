@@ -41,10 +41,10 @@ public class Main {
                 input = printMainMenu(scanner);
                 switch (input) {
                     case "1":
-                        managePatients(scanner, patientService);
+                        managePatients(scanner, patientService, doctorService);
                         break;
                     case "2":
-                        manageDoctors(scanner, doctorService);
+                        manageDoctors(scanner, doctorService, patientService);
                         break;
                     case "3":
                         manageAppointments(scanner, appointmentService, patientService, doctorService);
@@ -66,7 +66,7 @@ public class Main {
 
 
 
-    private static void manageDoctors(Scanner scanner, DoctorService doctorService) {
+    private static void manageDoctors(Scanner scanner, DoctorService doctorService, PatientService patientService) {
 
 
         switch (getDoctorChoice(scanner)) {
@@ -114,13 +114,19 @@ public class Main {
                 break;
             case "4":
                 Doctor deleteDoctor = inputDoctor(scanner, doctorService);
+
+                for (Patient patient: deleteDoctor.getPatients()) {
+                    boolean del = patient.getDoctors().remove(deleteDoctor);
+                    patientService.updatePatient(patient);
+
+                }
                 doctorService.deleteDoctor(deleteDoctor.getDoctorId());  // Use service here
                 System.out.println("Doctor deleted successfully.");
                 break;
         }
     }
 
-    private static void managePatients(Scanner scanner, PatientService patientService) {
+    private static void managePatients(Scanner scanner, PatientService patientService, DoctorService doctorService) {
         switch(getPatientChoice(scanner)){
             case "1":
                 Patient newPatient = new Patient();
@@ -173,8 +179,18 @@ public class Main {
             case "4":
                 // Application calls the service layer, not the repository directly
                 Patient deletePatient = inputPatient(scanner, patientService);
+
+
+                for (Doctor doctor : deletePatient.getDoctors()) {
+                    boolean del = doctor.getPatients().remove(deletePatient);
+                    doctorService.updateDoctor(doctor);
+
+                }
+
                 patientService.deletePatient(deletePatient.getPatientId());  // Use service here
                 System.out.println("Patient deleted successfully.");
+
+
                 break;
         }
 
